@@ -1,0 +1,511 @@
+<web-app version="2.5"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/j2ee/web-app_2_5.xsd">
+    <!--//初始化数据库-->
+    <servlet>
+    <description>for init DB connect when web server start. only one time!!</description>
+    <display-name>DBConn</display-name>
+    <servlet-name>DBConnServlet</servlet-name>
+    <servlet-class>controller.platform.DBConnServlet</servlet-class>
+     <init-param>
+            <param-name>className</param-name>
+            <param-value>com.mysql.jdbc.Driver</param-value>
+        </init-param>
+        <init-param>
+            <param-name>url</param-name>
+            <param-value>jdbc:mysql://localhost:3306/dataminingplatform</param-value>
+        </init-param>
+         <init-param>
+            <param-name>useUnicode</param-name>
+            <param-value>true</param-value>
+        </init-param>
+         <init-param>
+            <param-name>characterEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>username</param-name>
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>root</param-value>
+        </init-param>
+       <!--//该值为正数时web server启动时即立即调用该servlet，而非第一次调用servlet时才初始化-->
+        <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBConnServlet</servlet-name>
+    <url-pattern>/DBConnServlet.action</url-pattern>
+  </servlet-mapping>
+  
+  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+</welcome-file-list>
+
+
+
+
+    <!--//监听在线用户-->
+   <listener>
+        <listener-class>   
+             model.platform.OnlineListener 
+        </listener-class>   
+    </listener> 
+    
+ <session-config>
+ 	 <session-timeout>30</session-timeout>
+ </session-config>
+    
+    
+    
+    
+    <security-role>  
+    <role-name>admin</role-name>  
+  </security-role>
+  
+  <login-config>  
+    <auth-method>BASIC</auth-method>   
+</login-config>
+
+    <!--//管理员授权-->
+    <security-constraint>
+      <web-resource-collection>  
+         <web-resource-name>demo</web-resource-name>  
+         <url-pattern>*.dd</url-pattern>
+         <url-pattern>/view/algorithm/*</url-pattern>   
+      </web-resource-collection>  
+      <auth-constraint>   
+        <description>Administer Certification authority:</description> 
+        <role-name>admin</role-name>
+      </auth-constraint>   
+  </security-constraint>
+    <!--//授权认证失败跳转到主页面-->
+   <error-page>
+    <error-code>401</error-code>
+    <location>/index.jsp</location>
+</error-page>
+
+
+
+    <!--//filter用于过滤不想让用户看到的网页，此处为不让未登录用户看到的网页-->
+    <filter>
+	    <filter-name>LoginFilter</filter-name>  
+	    <filter-class>model.platform.LoginFilter</filter-class>    
+	</filter>  
+	  
+	<filter-mapping>  
+	    <filter-name>LoginFilter</filter-name>  
+	    <url-pattern>/view/*</url-pattern>  
+	</filter-mapping>
+	<filter-mapping>  
+	    <filter-name>LoginFilter</filter-name>  
+	    <url-pattern>*.do</url-pattern>  
+	</filter-mapping>
+	
+<servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>OnlineList</servlet-name>
+    <servlet-class>controller.platform.OnlineList</servlet-class>
+</servlet>
+  <servlet-mapping>
+    <servlet-name>OnlineList</servlet-name>
+    <url-pattern>/OnlineList.dd</url-pattern>
+  </servlet-mapping>
+  
+	
+    
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>controller.platform.LoginServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>controller.platform.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>InsertServlet</servlet-name>
+    <servlet-class>controller.platform.InsertServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UpdateServlet</servlet-name>
+    <servlet-class>controller.platform.UpdateServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UserInfo</servlet-name>
+    <servlet-class>controller.platform.UserInfo</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UserList</servlet-name>
+    <servlet-class>controller.platform.UserList</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DeleteUser</servlet-name>
+    <servlet-class>controller.platform.DeleteUser</servlet-class>
+  </servlet>
+
+
+
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/LoginServlet.action</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/LogoutServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>InsertServlet</servlet-name>
+    <url-pattern>/InsertServlet.action</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateServlet</servlet-name>
+    <url-pattern>/UpdateServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserInfo</servlet-name>
+    <url-pattern>/UserInfo.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserList</servlet-name>
+    <url-pattern>/UserList.dd</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteUser</servlet-name>
+    <url-pattern>/DeleteUser.do</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>ModifyDatasetDescriptionServlet</servlet-name>
+    <servlet-class>controller.dataset.ModifyDatasetDescriptionServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ImportFile</servlet-name>
+    <servlet-class>controller.dataset.ImportFile</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>CatDataset</servlet-name>
+    <servlet-class>controller.dataset.CatDataset</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>DeleteDataset</servlet-name>
+    <servlet-class>controller.dataset.DeleteDataset</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ModifyDsDscrptPre</servlet-name>
+    <servlet-class>controller.dataset.ModifyDsDscrptPre</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>AddDatasetRecord</servlet-name>
+    <servlet-class>controller.dataset.AddDatasetRecord</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>SubmitAddDsRecord</servlet-name>
+    <servlet-class>controller.dataset.SubmitAddDsRecord</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ManageDataset</servlet-name>
+    <servlet-class>controller.dataset.ManageDataset</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>DataSampleServlet</servlet-name>
+    <servlet-class>controller.dataset.DataSampleServlet</servlet-class>
+  </servlet>
+  
+  
+  <servlet>
+    <servlet-name>ManageFieldsInfo</servlet-name>
+    <servlet-class>controller.dataset.ManageFieldsInfo</servlet-class>
+  </servlet>
+
+<servlet>
+    <servlet-name>SaveFieldsInfo</servlet-name>
+    <servlet-class>controller.dataset.SaveFieldsInfo</servlet-class>
+  </servlet>
+  
+
+
+  
+  
+  <servlet-mapping>
+    <servlet-name>ModifyDatasetDescriptionServlet</servlet-name>
+    <url-pattern>/ModifyDatasetDescriptionServlet.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ImportFile</servlet-name>
+    <url-pattern>/ImportFile.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>CatDataset</servlet-name>
+    <url-pattern>/CatDataset.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>DeleteDataset</servlet-name>
+    <url-pattern>/DeleteDataset.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ModifyDsDscrptPre</servlet-name>
+    <url-pattern>/ModifyDsDscrptPre.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>AddDatasetRecord</servlet-name>
+    <url-pattern>/AddDatasetRecord.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>SubmitAddDsRecord</servlet-name>
+    <url-pattern>/SubmitAddDsRecord.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ManageDataset</servlet-name>
+    <url-pattern>/ManageDataset.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>DataSampleServlet</servlet-name>
+    <url-pattern>/DataSampleServlet.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ManageFieldsInfo</servlet-name>
+    <url-pattern>/ManageFieldsInfo.do</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>SaveFieldsInfo</servlet-name>
+    <url-pattern>/SaveFieldsInfo.do</url-pattern>
+  </servlet-mapping>
+  
+
+
+
+
+
+
+    <servlet>
+        <servlet-name>AddAlgorithmServlet</servlet-name>
+        <servlet-class>controller.algorithm.AddAlgorithmServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddAlgorithmServlet</servlet-name>
+        <url-pattern>/addAlgorithm.dd</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DelAlgorithmServlet</servlet-name>
+        <servlet-class>controller.algorithm.DelAlgorithmServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DelAlgorithmServlet</servlet-name>
+        <url-pattern>/delAlgorithm.dd</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateAlgorithmServlet</servlet-name>
+        <servlet-class>controller.algorithm.UpdateAlgorithmServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateAlgorithmServlet</servlet-name>
+        <url-pattern>/updateAlgorithm.dd</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShowADesInfoServlet</servlet-name>
+        <servlet-class>controller.algorithm.ShowADesInfoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowADesInfoServlet</servlet-name>
+        <url-pattern>/showAlgoDesInfo.do</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>ShowAlgorithmServlet</servlet-name>
+        <servlet-class>controller.algorithm.ShowAlgorithmServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowAlgorithmServlet</servlet-name>
+        <url-pattern>/showAlgorithm.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UploadJarFileServlet</servlet-name>
+        <servlet-class>controller.algorithm.UploadJarFileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadJarFileServlet</servlet-name>
+        <url-pattern>/uploadJar.dd</url-pattern>
+    </servlet-mapping>
+    
+  <servlet>
+        <servlet-name>ShowParamsServlet</servlet-name>
+        <servlet-class>controller.algorithm.ShowParamsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowParamsServlet</servlet-name>
+        <url-pattern>/showParams.do</url-pattern>
+    </servlet-mapping>
+   
+   
+
+   
+  
+	
+	
+ 
+ <servlet>
+<servlet-name>TaskInfo</servlet-name>
+<servlet-class>controller.taskManager.CheckTaskServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>TaskInfo</servlet-name>
+<url-pattern>/TaskInfo.do</url-pattern>
+</servlet-mapping>
+<servlet>
+<servlet-name>EditTaskServlet</servlet-name>
+<servlet-class>controller.taskManager.EditTaskServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>EditTaskServlet</servlet-name>
+<url-pattern>/EditTask.do</url-pattern>
+</servlet-mapping>
+<servlet>
+<description>This is the description of my J2EE component</description>
+<display-name>This is the display name of my J2EE component</display-name>
+<servlet-name>TaskIndexServlet</servlet-name>
+<servlet-class>controller.taskManager.TaskIndexServlet</servlet-class>
+</servlet>
+<servlet>
+<description>This is the description of my J2EE component</description>
+<display-name>This is the display name of my J2EE component</display-name>
+<servlet-name>AddTaskServlet</servlet-name>
+<servlet-class>controller.taskManager.AddTaskServlet</servlet-class>
+</servlet>
+<servlet>
+<description>This is the description of my J2EE component</description>
+<display-name>This is the display name of my J2EE component</display-name>
+<servlet-name>CheckTaskServlet</servlet-name>
+<servlet-class>controller.taskManager.CheckTaskServlet</servlet-class>
+</servlet>
+<servlet>
+<description>This is the description of my J2EE component</description>
+<display-name>This is the display name of my J2EE component</display-name>
+<servlet-name>DeleteTaskServlet</servlet-name>
+<servlet-class>controller.taskManager.DeleteTaskServlet</servlet-class>
+</servlet>
+<servlet>
+<description>This is the description of my J2EE component</description>
+<display-name>This is the display name of my J2EE component</display-name>
+<servlet-name>RunTaskInstanceServlet</servlet-name>
+<servlet-class>controller.taskManager.RunTaskInstanceServlet</servlet-class>
+</servlet>
+<servlet>
+<description>This is the description of my J2EE component</description>
+<display-name>This is the display name of my J2EE component</display-name>
+<servlet-name>AddTaskInstanceServlet</servlet-name>
+<servlet-class>controller.taskManager.AddTaskInstanceServlet</servlet-class>
+</servlet>
+<servlet>
+<description>This is the description of my J2EE component</description>
+<display-name>This is the display name of my J2EE component</display-name>
+<servlet-name>TaskInstanceIndexServlet</servlet-name>
+<servlet-class>controller.taskManager.TaskInstanceIndexServlet</servlet-class>
+</servlet>
+<servlet>
+<description>This is the description of my J2EE component</description>
+<display-name>This is the display name of my J2EE component</display-name>
+<servlet-name>CheckTaskInstanceServlet</servlet-name>
+<servlet-class>controller.taskManager.CheckTaskInstanceServlet</servlet-class>
+</servlet>
+<servlet>
+<description>This is the description of my J2EE component</description>
+<display-name>This is the display name of my J2EE component</display-name>
+<servlet-name>DeleteTaskInstanceServlet</servlet-name>
+<servlet-class>controller.taskManager.DeleteTaskInstanceServlet</servlet-class>
+</servlet>
+<servlet>
+<description>This is the description of my J2EE component</description>
+<display-name>This is the display name of my J2EE component</display-name>
+<servlet-name>StopTaskInstanceServlet</servlet-name>
+<servlet-class>controller.taskManager.StopTaskInstanceServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>TaskIndexServlet</servlet-name>
+<url-pattern>/TaskIndexServlet.do</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+<servlet-name>AddTaskServlet</servlet-name>
+<url-pattern>/AddTaskServlet.do</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+<servlet-name>CheckTaskServlet</servlet-name>
+<url-pattern>/CheckTaskServlet.do</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+<servlet-name>DeleteTaskServlet</servlet-name>
+<url-pattern>/DeleteTaskServlet.do</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+<servlet-name>RunTaskInstanceServlet</servlet-name>
+<url-pattern>/RunTaskInstanceServlet.do</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+<servlet-name>AddTaskInstanceServlet</servlet-name>
+<url-pattern>/AddTaskInstanceServlet.do</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+<servlet-name>TaskInstanceIndexServlet</servlet-name>
+<url-pattern>/TaskInstanceIndex.do</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+<servlet-name>CheckTaskInstanceServlet</servlet-name>
+<url-pattern>/CheckTaskInstance.do</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+<servlet-name>DeleteTaskInstanceServlet</servlet-name>
+<url-pattern>/DeleteTaskInstance.do</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+<servlet-name>StopTaskInstanceServlet</servlet-name>
+<url-pattern>/StopTaskInstance.do</url-pattern>
+</servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>ShowFimServlet</servlet-name>
+        <servlet-class>controller.result.ShowFimServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowFimServlet</servlet-name>
+        <url-pattern>/showfim.do</url-pattern>
+    </servlet-mapping>
+
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>AllTaskServlet</servlet-name>
+    <servlet-class>controller.taskManager.AllTaskServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AllTaskServlet</servlet-name>
+    <url-pattern>/AllTask.do</url-pattern>
+  </servlet-mapping>
+
+</web-app>

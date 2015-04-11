@@ -1,0 +1,43 @@
+#news {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#news th,
+#news td {
+    padding: 3px 6px;
+    vertical-align: top;
+}
+
+#news td:first-child {
+    width: 48px;
+}
+#news th {
+    text-align: left;
+    color: #fff;
+}
+#news thead th {
+    background-color: #15b;
+}
+#news tbody th {
+    background-color: #6f93ce;
+}
+#news .alt td {
+    background-color: #ccc;
+}
+#news .alt-2 td {
+    background-color: #ddd;
+}
+#news td.selected {
+    background-color: #eee;
+}
+
+.highlight {
+    font-weight: bold;
+    font-style: italic;
+    color: #080;
+}
+
+#news td.active {
+    background-color: #dfd;
+}

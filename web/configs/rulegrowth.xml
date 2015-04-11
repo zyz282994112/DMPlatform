@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <rulegrowth>
+        <minsupport>0.2</minsupport>
+        <minconf>0.5</minconf>
+        <input>/Users/chengsiyuan/IdeaProjects/SPMF/src/ca/pfv/spmf/test/contextPrefixSpan.txt</input>
+        <output>/Users/chengsiyuan/IdeaProjects/SPMF/output_rulegrowth.txt</output>
+    </rulegrowth>
+</configuration>

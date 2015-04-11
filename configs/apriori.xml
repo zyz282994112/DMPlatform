@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <apriori>
+        <minsupport>0.2</minsupport>
+        <input>/Users/chengsiyuan/IdeaProjects/SPMF/src/ca/pfv/spmf/test/contextPasquier99.txt</input>
+        <output>/Users/chengsiyuan/IdeaProjects/SPMF/output_aprior.txt</output>
+    </apriori>
+
+</configuration>

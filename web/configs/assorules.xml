@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <assorules>
+        <minsupport>0.2</minsupport>
+        <minconf>0.5</minconf>
+        <input>/Users/chengsiyuan/IdeaProjects/SPMF/src/ca/pfv/spmf/test/contextIGB.txt</input>
+        <output>/Users/chengsiyuan/IdeaProjects/SPMF/output_assorules.txt</output>
+    </assorules>
+</configuration>

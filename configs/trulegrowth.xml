@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <trulegrowth>
+        <minsupport>0.2</minsupport>
+        <minconf>0.5</minconf>
+        <windowSize>3</windowSize>
+        <input>/Users/chengsiyuan/IdeaProjects/SPMF/src/ca/pfv/spmf/test/contextPrefixSpanStrings.txt</input>
+        <output>/Users/chengsiyuan/IdeaProjects/SPMF/output_trulegrowth.txt</output>
+    </trulegrowth>
+</configuration>

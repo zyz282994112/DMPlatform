@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <prefixspan>
+        <minsupport>0.2</minsupport>
+        <input>/Users/chengsiyuan/IdeaProjects/SPMF/src/ca/pfv/spmf/test/contextPrefixSpanStrings.txt</input>
+        <output>/Users/chengsiyuan/IdeaProjects/SPMF/output_prefix.txt</output>
+    </prefixspan>
+
+</configuration>

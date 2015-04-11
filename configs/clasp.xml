@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <clasp>
+        <minsupport>0.2</minsupport>
+        <input>/Users/chengsiyuan/IdeaProjects/SPMF/src/ca/pfv/spmf/test/contextPrefixSpan.txt</input>
+        <output>/Users/chengsiyuan/IdeaProjects/SPMF/output_clasp.txt</output>
+    </clasp>
+
+</configuration>
